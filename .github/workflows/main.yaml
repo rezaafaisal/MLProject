@@ -8,8 +8,12 @@ on:
     branches:
       - main
  
+permissions:
+  contents: write 
+
 env:
   CSV_URL: "MLproject/train_pca.csv"
+  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
  
 jobs:
   build:
@@ -42,8 +46,6 @@ jobs:
           mlflow run . --env-manager=local 
 
       - name: Set up Git LFS and push changes
-        env:
-         GH_PAT: ${{ secrets.GH_PAT }}
         run: |
          git config --global user.name ${{ secrets.username }}
          git config --global user.email ${{ secrets.email }}
